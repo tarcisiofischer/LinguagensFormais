@@ -1,0 +1,69 @@
+<html>
+ <head>
+  <title>Linguagens Formais</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <link rel="stylesheet" href="css/estilos.css" />
+  <script type="text/javascript" src="js/prototype-1.7.0.0.js"></script>
+  <script type="text/javascript" src="js/Set.js"></script>
+  <script type="text/javascript" src="js/LinguagensFormais.js"></script>
+  <script type="text/javascript" src="js/Gramatica.js"></script>
+  <script type="text/javascript" src="js/Producao.js"></script>
+  <script type="text/javascript">
+  // Controlador
+  function gerarLinguagem() {
+	var campoGramatica = document.getElementById("gramatica").value;
+	var campoTamanhoMaximoSentenca = document.getElementById("tamanhoMaximoSentenca").value;
+	var campoResultado = document.getElementById("resultado");
+	
+	var producoes = new Set(campoGramatica.split("\n"));
+	
+	var gramatica = new lf.Gramatica();
+	var msg = "";
+	producoes.foreach(function(producao) {
+		// Ignora linhas vazias
+		if(producao != "") {
+			try {
+				gramatica.adicionarProducao(new lf.Producao(producao));
+			} catch (e) {
+				msg = e + " : " + producao;
+			}
+		}
+	});
+	if(msg != "") {
+		campoResultado.value = msg;
+		return;
+	}
+	
+	var sentencas = gramatica.gerarSentencas(parseInt(campoTamanhoMaximoSentenca));
+	campoResultado.value = "";
+	sentencas.foreach(function(sentenca) {
+		campoResultado.value += sentenca + "\n";
+	});
+  }
+  </script>
+ </head>
+ <body>
+  <div id="titulo">Linguagens Formais</div>
+  <div id="autor">Por Tarcísio Fischer</div>
+  <div id="janelaPrincipal">
+    <textarea id="gramatica">S -> aS / a</textarea>
+    
+    <div id="formularioGerar">
+      <p>Tamanho:
+      <select id="tamanhoMaximoSentenca">
+       <option value="4">4</option>
+       <option value="5">5</option>
+       <option value="6">6</option>
+       <option value="7">7</option>
+       <option value="8">8</option>
+       <option value="9">9</option>
+       <option value="10">10</option>
+      </select></p>
+      <input type="button" id="btnGerar" onclick="gerarLinguagem()" value="Gerar Linguagem >>>"/>
+    </div>
+    
+    <textarea id="resultado" readonly="readonly"></textarea>
+    
+  </div>
+ </body>
+</html>
