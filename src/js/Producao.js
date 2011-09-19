@@ -7,28 +7,29 @@
  * - Simbolos terminais são representados por letras minusculas.
  * - É necessario sempre ter '->' para separar a forma sentencial da esquerda das da direita.
  *   (exemplos logo abaixo)
- * - O 'OU' é representado por '/' e não por |. Cuidado com isso. Isso é pq eu não consegui fazer
- *   o regex do javascript aceitar o | :( aparentemente é um caracter especial. Se alguem conseguir
- *   pode mudar :D
  * - Ainda nao tenho suporte para o <epsilon>. Mas pretendo representa-lo por #. A nao ser que
  *   alguem tenha uma ideia melhor.
  * 
  * Modo de usar: (exemplos)
- * p = new lf.Producao("S -> aS / aB");
+ * p = new lf.Producao("S -> aS | aB");
  * p = new lf.Producao("AB -> BA");
  * p = new lf.Producao("aXb -> ba");
- * p = new lf.Producao("S -> aSb / bSa / bSb / aSa / ab / ba / aa / bb");
- * p = new lf.Producao("   S->    aXc       /bSa/ bSb/aSa   / ab / ba / aa / bb       "); // Espacos nao sao relevantes :)
+ * p = new lf.Producao("S -> aSb | bSa | bSb | aSa | ab | ba | aa | bb");
+ * p = new lf.Producao("   S->    aXc       |bSa| bSb|aSa  |  ab| ba | aa | bb       "); // Espacos nao sao relevantes :)
  * 
  * Modo de NAO USAR:
- * p = new lf.Producao("S -> aS | aB");
- * p = new lf.Producao("S > aS / aB");
- * p = new lf.Producao("S <- aS / aB");
- * p = new lf.Producao("S -> a S / aB");
+ * p = new lf.Producao("S -> aS / aB");
+ * p = new lf.Producao("S > aS | aB");
+ * p = new lf.Producao("S <- aS | aB");
+ * p = new lf.Producao("S -> a S | aB");
  * p = new lf.Producao("a -> S"); // Tem que ter pelo menos um nao terminal na esquerda!
  * 
  * @author Tarcísio Fischer
- * @version 0.1
+ * @version 0.1.2
+ * 
+ * @changelog
+ * 0.1.2
+ * - Graças à ajuda do Felipe Silveira, temos a | para representar o OU :)
  */
 lf.Producao = Class.create({
 	
@@ -37,14 +38,14 @@ lf.Producao = Class.create({
 		this._simbolosAEsquerda;
 		this._simbolosADireita;
 		
-		var regex = new RegExp("^( *[a-z]*[A-Z]+[a-z]* *(->) *[a-zA-Z#]+( */ *[a-zA-Z#]+ *)* *)$");
+		var regex = new RegExp("^( *[a-z]*[A-Z]+[a-z]* *(->) *[a-zA-Z#]+( *[\|] *[a-zA-Z#]+ *)* *)$");
 		if(regex.test(producao)) {
 			// Pega a producao ignorando espacos em branco
 			this._producao = producao.replace(/ */g, "");
 			
 			var simbolos = this._producao.split("->");
 			this.simbolosAEsquerda = simbolos[0];
-			this.simbolosADireita = new Set(simbolos[1].split("/"));
+			this.simbolosADireita = new Set(simbolos[1].split("|"));
 		} else {
 			throw "Producao invalida";
 		};

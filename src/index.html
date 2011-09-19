@@ -10,7 +10,7 @@
   <script type="text/javascript" src="js/Producao.js"></script>
   <script type="text/javascript">
   // Controlador
-  function gerarLinguagem() {
+  function gerarSentencas() {
 	var campoGramatica = document.getElementById("gramatica").value;
 	var campoTamanhoMaximoSentenca = document.getElementById("tamanhoMaximoSentenca").value;
 	var campoResultado = document.getElementById("resultado");
@@ -44,22 +44,20 @@
  </head>
  <body>
   <div id="titulo">Linguagens Formais</div>
-  <div id="autor">Por Tarcísio Fischer</div>
   <div id="janelaPrincipal">
-    <textarea id="gramatica">S -> aS / a</textarea>
+    <textarea id="gramatica">S -> aSBC | aBC
+CB -> BC
+aB -> ab
+bB -> bb
+bC -> bc
+cC -> cc</textarea>
     
     <div id="formularioGerar">
-      <p>Tamanho:
-      <select id="tamanhoMaximoSentenca">
-       <option value="4">4</option>
-       <option value="5">5</option>
-       <option value="6">6</option>
-       <option value="7">7</option>
-       <option value="8">8</option>
-       <option value="9">9</option>
-       <option value="10">10</option>
-      </select></p>
-      <input type="button" id="btnGerar" onclick="gerarLinguagem()" value="Gerar Linguagem >>>"/>
+      <p>
+        Tamanho:
+        <input size="4" value="10" type="text" id="tamanhoMaximoSentenca" />
+      </p>
+      <input type="button" id="btnGerar" onclick="gerarSentencas()" value="Gerar Sentencas >>>"/>
     </div>
     
     <textarea id="resultado" readonly="readonly"></textarea>

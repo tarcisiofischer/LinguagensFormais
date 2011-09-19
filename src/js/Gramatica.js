@@ -4,9 +4,9 @@
  * 
  * Modo de usar:
  * g = new lf.Gramatica(); // (lf significa o pacote LinguagensFormais)
- * g.adicionarProducao(new lf.Producao("S -> aS / aB"));
+ * g.adicionarProducao(new lf.Producao("S -> aS | aB"));
  * g.adicionarProducao(new lf.Producao("B -> bC"));
- * g.adicionarProducao(new lf.Producao("C -> aC / a"));
+ * g.adicionarProducao(new lf.Producao("C -> aC | a"));
  * 
  * Esse exemplo deveria gerar a linguagem a+ba+
  * Veja a classe Producao para detalhes de como construir uma producao.
