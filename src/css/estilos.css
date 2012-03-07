@@ -37,12 +37,12 @@ textarea {
 
 #gramatica {
 	float: left;
-	width: 40%;
+	width: 30%;
 	height: 300;
 }
 
 #formularioGerar {
-	width: 15%;
+	width: 140px;
 	color: #000;
 	margin-left: 30px;
 	margin-right: 30px;
@@ -55,6 +55,6 @@ textarea {
 
 #resultado {
 	float: left;
-	width: 40%;
+	width: 30%;
 	height: 300;
 }
